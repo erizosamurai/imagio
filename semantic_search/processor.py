@@ -1,6 +1,5 @@
 import os 
 from PIL import Image
-import numpy as np 
 import torch
 from torch.utils.data import DataLoader
 
@@ -50,21 +49,18 @@ class ImageProcessor:
               file_names.extend(filename_batch)
 
       embeddings_tensor = torch.cat(all_embeddings)
-      return embeddings_tensor.numpy(), file_names
-
+      return embeddings_tensor, file_names
+  
   def save_embeddings(self,embeddings,file_names,save_path='embeddings/'):
       os.makedirs(save_path,exist_ok=True)
-      np.save(os.path.join(save_path,'embeddings.npy'),embeddings)
-      np.save(os.path.join(save_path,'filenames.npy'),file_names)
+      torch.save(embeddings,os.path.join(save_path,'embeddings.pt'))
+      torch.save(file_names,os.path.join(save_path,'filenames.pt'))
   
-  def load_embeddings(self):
-      pass
-
 
 if __name__ == "__main__":
    process_images = ImageProcessor(path='Data')
    embeddings, file_name = process_images.process_folder()
    process_images.save_embeddings(embeddings,file_name)
-   a = np.load('embeddings/filenames.npy')
+   a = torch.load('embeddings/filenames.pt')
    print(a)
     
