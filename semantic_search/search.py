@@ -1,16 +1,13 @@
-import numpy as np
-import faiss
-import json 
 import os 
 from model import SemanticSearchModel
+from utils import load_faiss_index, load_json
 
 
 class ImageSearch:
   def __init__(self,path='embeddings/',model:SemanticSearchModel=None):
     self.path = path
-    self.index= faiss.read_index(os.path.join(path,'index.faiss'))
-    with open(os.path.join(path, 'filenames.json'), 'r') as f:
-      self.filenames = json.load(f)
+    self.index= load_faiss_index(os.path.join(path,'index.faiss'))
+    self.filenames = load_json(file_path=path,file_name='filenames.json')
     self.model = model or SemanticSearchModel()
 
   def search(self,query,top_k=5,threshold=50):

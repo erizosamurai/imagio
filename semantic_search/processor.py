@@ -1,13 +1,11 @@
 import os
 from PIL import Image
-import numpy as np
 import torch
-import json
 import faiss
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 
 from model import SemanticSearchModel
-
+from  utils import save_faiss_index, save_json
 class ImageDataset:
   def __init__(self,path):
     self.path = path
@@ -35,7 +33,7 @@ class ImageProcessor:
             dataset,
             batch_size= self.batch_size,
             shuffle=False,
-            num_workers=4,
+            num_workers=0,
             collate_fn=lambda batch: list(zip(*batch)),  # To separate imgs, filenames
         )
 
@@ -56,18 +54,17 @@ class ImageProcessor:
 
     return embeddings_tensor.detach().cpu().numpy(), file_names
 
-  def save_embeddings(self,embeddings,file_names,save_path='embeddings/'):
+  def save_embeddings(self,embeddings,file,save_path='embeddings/'):
       os.makedirs(save_path,exist_ok=True)
       self.index.add(embeddings)
-      faiss.write_index(self.index, os.path.join(save_path, 'index.faiss'))
-      with open(os.path.join(save_path, 'filenames.json'), 'w') as f:
-        json.dump(file_names, f, indent=4)
+      save_faiss_index(self.index, os.path.join(save_path, 'index.faiss'))
+      save_json(file=file,file_name='filenames.json',file_path=save_path)
   
 
 if __name__ == "__main__":
    process_images = ImageProcessor(path='Data')
    embeddings, file_name = process_images.process_folder()
    process_images.save_embeddings(embeddings,file_name)
-   a = torch.load('embeddings/filenames.pt')
-   print(a)
+   a = faiss.read_index('/content/embeddings/index.faiss')
+   print(a.ntotal)
     
