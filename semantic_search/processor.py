@@ -65,6 +65,6 @@ if __name__ == "__main__":
    process_images = ImageProcessor(path='Data')
    embeddings, file_name = process_images.process_folder()
    process_images.save_embeddings(embeddings,file_name)
-   a = faiss.read_index('/content/embeddings/index.faiss')
+   a = faiss.read_index('embeddings/index.faiss')
    print(a.ntotal)
     
