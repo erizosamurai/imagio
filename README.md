@@ -39,7 +39,7 @@ Imagio provides two main commands: `process` to generate embeddings and `search`
 Generate embeddings for images and save to a Faiss index:
 
 ```bash
-imagio process --image_folder data/images --embeddings_path embeddings
+imagio process --image_folder "data/images" --embeddings_path "embeddings"
 ```
 
 **Arguments:**
