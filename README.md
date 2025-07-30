@@ -9,7 +9,7 @@ Imagio is a command-line interface (CLI) tool for semantic image search, powered
 To install Imagio directly on your system:
 
 ```bash
-git clone https://github.com/yourusername/imagio.git
+git clone https://github.com/erizosamurai/imagio.git
 cd imagio
 pip install -e .
 ```
@@ -50,13 +50,6 @@ imagio process --image_folder data/images --embeddings_path embeddings
 * `--embedding_dim` (optional): Embedding dimension (default: 512).
 * `--verbose` (optional): Enable detailed logging.
 
-**Output:**
-
-```
-Imagio: Processing 10 images.
-Imagio: Processed 10 images. Saved to embeddings/index.faiss and embeddings/filenames.json.
-```
-
 ---
 
 ### Search Command
@@ -75,14 +68,6 @@ imagio search --query "dog" --embeddings_path embeddings --threshold 0.8 --top_k
 * `--top_k` (optional): Number of results (default: 5).
 * `--model_name` (optional): CLIP model (must match process).
 * `--verbose` (optional): Enable detailed logging.
-
-**Output:**
-
-```
-Imagio: dog.jpg (Similarity: 0.92)
-Imagio: puppy.png (Similarity: 0.89)
-Imagio: hound.jpg (Similarity: 0.85)
-```
 
 ---
 
