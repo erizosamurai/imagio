@@ -9,7 +9,7 @@ class SemanticSearchModel(nn.Module):
         super().__init__()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = CLIPModel.from_pretrained(name)
-        self.processor =  CLIPProcessor.from_pretrained(name)
+        self.processor =  CLIPProcessor.from_pretrained(name, use_fast=False)
         self.eval()
     
     def forward(self,images,text):

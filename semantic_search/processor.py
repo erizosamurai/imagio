@@ -4,12 +4,12 @@ import torch
 import faiss
 from torch.utils.data import DataLoader
 
-from model import SemanticSearchModel
-from  utils import save_faiss_index, save_json
+from semantic_search.model import SemanticSearchModel
+from semantic_search.utils import save_faiss_index, save_json, get_image_files
 class ImageDataset:
   def __init__(self,path):
     self.path = path
-    self.images = [ f for f in os.listdir(path) if f.lower().endswith(('.jpg','.jpeg','.png'))]
+    self.images = get_image_files(self.path)
   
   def __len__(self):
     return len(self.images)
@@ -27,13 +27,13 @@ class ImageProcessor:
     self.batch_size = batch_size
     self.index = faiss.IndexFlatIP(dimension)
 
-  def process_folder(self):
+  def process_folder(self,workers=0):
     dataset = ImageDataset(self.path)
     dataloader = DataLoader(
             dataset,
             batch_size= self.batch_size,
             shuffle=False,
-            num_workers=0,
+            num_workers=workers,
             collate_fn=lambda batch: list(zip(*batch)),  # To separate imgs, filenames
         )
 
@@ -45,7 +45,7 @@ class ImageProcessor:
 
     with torch.no_grad():
       for imgs_batch,filename_batch in dataloader:
-        embeddings = self.model.encode_image(imgs_batch)
+        embeddings = self.model.encode_image(imgs_batch).to(self.device)
 
         all_embeddings.append(embeddings.cpu())
         file_names.extend(filename_batch)

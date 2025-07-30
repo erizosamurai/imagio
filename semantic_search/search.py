@@ -1,6 +1,6 @@
 import os 
-from model import SemanticSearchModel
-from utils import load_faiss_index, load_json
+from semantic_search.model import SemanticSearchModel
+from semantic_search.utils import load_faiss_index, load_json
 
 
 class ImageSearch:

@@ -16,3 +16,6 @@ def load_json(file_path,file_name):
     with open(os.path.join(file_path, file_name), 'r') as f:
        filenames = json.load(f)
     return filenames
+
+def get_image_files(folder):
+    return [f for f in os.listdir(folder) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
