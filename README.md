@@ -1,5 +1,3 @@
----
-
 # Imagio: Semantic Image Search CLI
 
 Imagio is a command-line interface (CLI) tool for semantic image search, powered by CLIP (Contrastive Language–Image Pretraining) and Faiss (Facebook AI Similarity Search). It enables users to process a folder of images to generate embeddings, store them in a Faiss index, and search for images using text queries, retrieving the top-k most relevant images above a specified similarity threshold.
