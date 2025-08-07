@@ -151,7 +151,7 @@ I welcome contributions to enhance Imagio. Below are key areas where help is app
 
 ### To Contribute
 
-1. Fork the repository: [https://github.com/yourusername/imagio](https://github.com/yourusername/imagio)
+1. Fork the repository: [https://github.com/erizosamurai/imagio](https://github.com/erizosamurai/imagio)
 2. Create a branch:
 
    ```bash
